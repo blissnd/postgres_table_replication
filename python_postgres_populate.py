@@ -38,7 +38,7 @@ try:
 except:
 	pass
 	
-for count in range(0,100):
+while (True):
 	
 	time.sleep(1)
 	
