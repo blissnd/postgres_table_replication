@@ -19,3 +19,18 @@ host    all             all             ::1/128                 md5
 host    replication     all             0.0.0.0/0            md5
 host    replication     all             ::1/128                 md5
 ```
+
+The following environment variables must be set
+================================
+```
+export PGUSERID=<db_user_id>
+export PGPASSWORD=<db_password>
+export PGSOURCEIP=<ip_address_of_db_source>
+export PGTARGETIP=<ip_address_of_db_target>
+```
+
+ssh / scp access
+============
+```
+ssh / scp must be configured to allow direct private key access between postgres DB nodes
+```
