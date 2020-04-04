@@ -16,4 +16,7 @@ ssh -i ./postgres_node_private_key $1 export PGUSERID=$PGUSERID
 ssh -i ./postgres_node_private_key $1 echo $PGSOURCEIP > /tmp/postgres/source_ip.txt
 ssh -i ./postgres_node_private_key $1 echo $PGTARGETIP > /tmp/postgres/target_ip.txt
 
-ssh -i ./postgres_node_private_key $1 /tmp/postgres/generate_import_sql.sh $2 $3
+ssh -i ./postgres_node_private_key $1 PGSOURCEIP=$PGTARGETIP \
+PGPASSWORD=$PGTARGETPASSWORD \
+PGUSERID=$PGUSERID \
+/tmp/postgres/generate_import_sql.sh $2 $3
