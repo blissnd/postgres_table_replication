@@ -75,7 +75,7 @@ except:
 	
 while (True):
 	
-	time.sleep(1)
+	time.sleep(5)
 	
 	sql_insert_string = "insert into ndb_test_table (sequence_id, string1, string2, string3) values ('" + str(start_index) + "', 'string1_" + str(start_index) + "', 'string2_" + str(start_index) + "', 'string3_" + str(start_index) + "');"
 	cur.execute(sql_insert_string)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ssh_script <target_host> <db_name> <table_name>
+# Usage: execute_replication.sh <target_host> <db_name> <table_name>
 
 mkdir -p /tmp/postgres
 ssh -i ./postgres_node_private_key $1 mkdir -p /tmp/postgres
