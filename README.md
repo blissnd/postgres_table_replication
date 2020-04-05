@@ -49,5 +49,5 @@ The version of the python script running on the Standby database will await succ
 
 Leave the python scripts running on the Master & Standby and then run:
 ```
-	> execute_replication.sh <target_host> <db_name> <table_name>
+	> execute_replication.sh <target_host> <db_name> <table_name> <target_node_user_id>
 ```
