@@ -12,6 +12,7 @@ The following environment variables must be set
 ================================
 ```
 export PGUSERID=<db_user_id>
+export PGTARGETUSERID=<db_target_node_user_id>
 export PGPASSWORD=<source_db_password>
 export PGTARGETPASSWORD=<target_db_password>
 export PGSOURCEIP=<ip_address_of_db_source>
