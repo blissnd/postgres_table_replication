@@ -1,17 +1,15 @@
- #!/bin/bash
+#!/bin/bash
  
- path_to_csv='/tmp/postgres/export.csv'
- echo "\copy $2 from $path_to_csv DELIMITER ',' CSV HEADER" > /tmp/postgres/import_command.sql
- 
- exit_condition=0
- 
- while [ $exit_condition -eq 0 ]; do
+rm /tmp/postgres/ERROR
+rm /tmp/postgres/DONE
+
+path_to_csv='/tmp/postgres/export.csv'
+echo "\copy $2 from $path_to_csv DELIMITER ',' CSV HEADER" > /tmp/postgres/import_command.sql
 	
-	output=$(psql -h $PGSOURCEIP -U $PGUSERID $1 < /tmp/postgres/import_command.sql 2>&1)
-	
-	if [[ "$output" != *"ERROR"* ]]; then
-		exit_condition=1
-	fi
-	
-	sed -i '1d' $path_to_csv
-done
+output=$(psql -h $PGSOURCEIP -U $PGUSERID $1 < /tmp/postgres/import_command.sql 2>&1)
+
+if [[ "$output" == *"ERROR"* ]]; then
+	echo $output > /tmp/postgres/ERROR
+else
+	echo $output > /tmp/postgres/DONE
+fi
