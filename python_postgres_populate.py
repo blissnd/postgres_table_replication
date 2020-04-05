@@ -3,10 +3,14 @@
 import psycopg2
 import time
 import os
+import os.path
+import sys
 
 userid = os.getenv('PGUSERID')
 password = os.getenv('PGPASSWORD')
 source_ip = os.getenv('PGSOURCEIP')
+
+db_status = sys.argv[1]
 
 conn = psycopg2.connect("dbname=ndb_test host=" + source_ip + " user=" + userid + " password=" + password)
 cur = conn.cursor()
@@ -28,7 +32,38 @@ if cur.rowcount == 0:
 	conn.commit()
 #
 
+# If Standby node then wait for replication
+
+if db_status == "STANDBY":
+	
+	if os.path.exists("/tmp/postgres/ERROR"):
+		os.remove("/tmp/postgres/ERROR")
+	# End If
+	
+	if os.path.exists("/tmp/postgres/DONE"):
+		os.remove("/tmp/postgres/DONE")
+	# End If
+	
+	replication_wait_status = 1
+	
+	while replication_wait_status == 1:
+		
+		print("Waiting for replication...")
+		
+		time.sleep(1)
+		
+		if os.path.exists("/tmp/postgres/ERROR"):
+			os.system("cat /tmp/postgres/ERROR")
+			exit(1)
+		elif os.path.exists("/tmp/postgres/DONE"):
+			os.system("cat /tmp/postgres/DONE")
+			replication_wait_status = 0
+		# End If
+	# End While
+	
+# End If
 ###
+
 start_index = 0
 
 get_max_sequence_id_sql_string = "select max(sequence_id) from ndb_test_table;"
